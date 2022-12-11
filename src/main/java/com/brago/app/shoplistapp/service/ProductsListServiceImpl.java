@@ -27,10 +27,32 @@ public class ProductsListServiceImpl implements ProductsListService {
     }
 
     @Override
+    public ProductsListDto getProductsList(Long productsListId) {
+        return productsListMapper.entityToDto(productsListRepository.findById(productsListId).get());
+    }
+
+    @Override
     public ProductsListDto createProductsList(ProductsListDto productsListDto) {
         ProductsList productsList = productsListMapper.dtoToEntity(productsListDto);
         return productsListMapper.entityToDto(
                 productsListRepository.save(productsList)
         );
+    }
+
+    @Override
+    public ProductsListDto updateProductsList(Long productsListId, ProductsListDto productsListDto) {
+        var productsListToUpdate = productsListRepository.findById(productsListId).get();
+
+        productsListToUpdate.setName(productsListDto.getName());
+        productsListToUpdate.setDescription(productsListDto.getDescription());
+
+        return productsListMapper.entityToDto(
+                productsListRepository.save(productsListToUpdate)
+        );
+    }
+
+    @Override
+    public void deleteProductsList(Long productsListId) {
+        productsListRepository.deleteById(productsListId);
     }
 }

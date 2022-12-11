@@ -3,7 +3,7 @@ package com.brago.app.shoplistapp.controller;
 import com.brago.app.shoplistapp.dto.ProductsListDto;
 import com.brago.app.shoplistapp.service.interfaces.ProductsListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +16,34 @@ public class ProductsListController {
     ProductsListService productsListService;
 
     @GetMapping()
-    public ResponseEntity<List<ProductsListDto>> getAllProductsList() {
-        return ResponseEntity
-                .ok(productsListService.getAllProductsLists());
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductsListDto> getAllProductsList() {
+        return productsListService.getAllProductsLists();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductsListDto getProductsList(@PathVariable("id") Long productsListId) {
+        return productsListService.getProductsList(productsListId);
     }
 
     @PostMapping()
-    public ResponseEntity<ProductsListDto> createProductsList(@RequestBody ProductsListDto productsListDto) {
-        return ResponseEntity
-                .ok(productsListService.createProductsList(productsListDto));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductsListDto createProductsList(@RequestBody ProductsListDto productsListDto) {
+        return productsListService.createProductsList(productsListDto);
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductsListDto updateProductsList(@PathVariable("id") Long productsListId,
+                                              @RequestBody ProductsListDto productsListDto) {
+        return productsListService.updateProductsList(productsListId, productsListDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProductsList(@PathVariable("id") Long productsListId) {
+        productsListService.deleteProductsList(productsListId);
+    }
+
 }
