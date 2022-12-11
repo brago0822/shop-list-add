@@ -18,3 +18,5 @@ spring:
               MySQL5Dialect: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update
+  jackson:
+    default-property-inclusion: NON_NULL

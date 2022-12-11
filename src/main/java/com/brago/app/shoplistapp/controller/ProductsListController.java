@@ -4,6 +4,7 @@ import com.brago.app.shoplistapp.dto.ProductsListDto;
 import com.brago.app.shoplistapp.service.interfaces.ProductsListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class ProductsListController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductsListDto createProductsList(@RequestBody ProductsListDto productsListDto) {
+    public ProductsListDto createProductsList(@RequestBody @Validated ProductsListDto productsListDto) {
         return productsListService.createProductsList(productsListDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductsListDto updateProductsList(@PathVariable("id") Long productsListId,
-                                              @RequestBody ProductsListDto productsListDto) {
+                                              @RequestBody @Validated ProductsListDto productsListDto) {
         return productsListService.updateProductsList(productsListId, productsListDto);
     }
 

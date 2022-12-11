@@ -1,6 +1,8 @@
 package com.brago.app.shoplistapp.service;
 
 import com.brago.app.shoplistapp.dto.ProductsListDto;
+import com.brago.app.shoplistapp.exception.ErrorType;
+import com.brago.app.shoplistapp.exception.ResourceNotFoundException;
 import com.brago.app.shoplistapp.mapper.ProductsListMapper;
 import com.brago.app.shoplistapp.model.ProductsList;
 import com.brago.app.shoplistapp.repository.ProductsListRepository;
@@ -28,7 +30,10 @@ public class ProductsListServiceImpl implements ProductsListService {
 
     @Override
     public ProductsListDto getProductsList(Long productsListId) {
-        return productsListMapper.entityToDto(productsListRepository.findById(productsListId).get());
+        var productsList = productsListRepository
+                .findById(productsListId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND_ERROR, "PRODUCTS LIST", productsListId.toString()));
+        return productsListMapper.entityToDto(productsList);
     }
 
     @Override
@@ -41,7 +46,9 @@ public class ProductsListServiceImpl implements ProductsListService {
 
     @Override
     public ProductsListDto updateProductsList(Long productsListId, ProductsListDto productsListDto) {
-        var productsListToUpdate = productsListRepository.findById(productsListId).get();
+        var productsListToUpdate = productsListRepository
+                .findById(productsListId)
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND_ERROR, "PRODUCTS LIST", productsListId.toString()));
 
         productsListToUpdate.setName(productsListDto.getName());
         productsListToUpdate.setDescription(productsListDto.getDescription());
@@ -53,6 +60,9 @@ public class ProductsListServiceImpl implements ProductsListService {
 
     @Override
     public void deleteProductsList(Long productsListId) {
+        if (!productsListRepository.existsById(productsListId)) {
+            throw new ResourceNotFoundException(ErrorType.RESOURCE_NOT_FOUND_ERROR, "PRODUCTS LIST", productsListId.toString());
+        }
         productsListRepository.deleteById(productsListId);
     }
 }
