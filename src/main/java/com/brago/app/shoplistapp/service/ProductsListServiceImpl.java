@@ -25,7 +25,8 @@ public class ProductsListServiceImpl implements ProductsListService {
     public List<ProductsListDto> getAllProductsLists() {
         return productsListRepository.findAll()
                 .stream()
-                .map(productsList -> productsListMapper.entityToDto(productsList)).collect(Collectors.toList());
+                .map(productsListMapper::entityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
