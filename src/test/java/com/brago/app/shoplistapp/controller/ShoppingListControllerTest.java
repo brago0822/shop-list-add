@@ -1,8 +1,8 @@
 package com.brago.app.shoplistapp.controller;
 
 import com.brago.app.shoplistapp.TestConfigurationUtil;
-import com.brago.app.shoplistapp.dto.ProductsListDto;
-import com.brago.app.shoplistapp.service.interfaces.ProductsListService;
+import com.brago.app.shoplistapp.dto.ShoppingListDto;
+import com.brago.app.shoplistapp.service.interfaces.ShoppingListService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,33 +27,33 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ProductsListController.class)
-class ProductsListControllerTest {
+@WebMvcTest(ShoppingListController.class)
+class ShoppingListControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductsListService mockProductsListService;
+    private ShoppingListService mockShoppingListService;
 
     @Test
-    void testGetAllProductsList() throws Exception {
+    void testGetAllShoppingList() throws Exception {
         // Setup
-        // Configure ProductsListService.getAllProductsLists(...).
-        final ProductsListDto productsListDto = TestConfigurationUtil.createSingleProductsListDto(1L);
-        final ProductsListDto productsListDto2 = TestConfigurationUtil.createSingleProductsListDto(2L);
+        // Configure ShoppingListService.getAllShoppingLists(...).
+        final ShoppingListDto shoppingListDto = TestConfigurationUtil.createSingleShoppingListDto(1L);
+        final ShoppingListDto shoppingListDto2 = TestConfigurationUtil.createSingleShoppingListDto(2L);
 
-        final List<ProductsListDto> productsListDtos = List.of(productsListDto, productsListDto2);
+        final List<ShoppingListDto> shoppingListDtos = List.of(shoppingListDto, shoppingListDto2);
 
         final String expectedStringResult = "[" +
                 "{\"id\":1,\"name\":\"List 1\",\"description\":\"Description of list 1\"}," +
                 "{\"id\":2,\"name\":\"List 2\",\"description\":\"Description of list 2\"}" +
                 "]";
-        when(mockProductsListService.getAllProductsLists()).thenReturn(productsListDtos);
+        when(mockShoppingListService.getAllShoppingLists()).thenReturn(shoppingListDtos);
 
         // Run the test
         final MockHttpServletResponse response = mockMvc
-                .perform(get("/v1/api/products-list")
+                .perform(get("/v1/api/shopping-list")
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -63,12 +63,12 @@ class ProductsListControllerTest {
     }
 
     @Test
-    void testGetAllProductsList_ProductsListServiceReturnsNoItems() throws Exception {
+    void testGetAllShoppingList_ShoppingListServiceReturnsNoItems() throws Exception {
         // Setup
-        when(mockProductsListService.getAllProductsLists()).thenReturn(Collections.emptyList());
+        when(mockShoppingListService.getAllShoppingLists()).thenReturn(Collections.emptyList());
 
         // Run the test
-        final MockHttpServletResponse response = mockMvc.perform(get("/v1/api/products-list")
+        final MockHttpServletResponse response = mockMvc.perform(get("/v1/api/shopping-list")
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -78,16 +78,16 @@ class ProductsListControllerTest {
     }
 
     @Test
-    void testGetProductsListById() throws Exception {
+    void testGetShoppingListById() throws Exception {
         // Setup
         final String expectedStringResult = "{\"id\":1,\"name\":\"List 1\",\"description\":\"Description of list 1\"}";
-        // Configure ProductsListService.getProductsList(...).
-        final ProductsListDto productsListDto = TestConfigurationUtil.createSingleProductsListDto(1L);
-        when(mockProductsListService.getProductsList(1L)).thenReturn(productsListDto);
+        // Configure ShoppingListService.getShoppingList(...).
+        final ShoppingListDto shoppingListDto = TestConfigurationUtil.createSingleShoppingListDto(1L);
+        when(mockShoppingListService.getShoppingList(1L)).thenReturn(shoppingListDto);
 
         // Run the test
         final MockHttpServletResponse response = mockMvc
-                .perform(get("/v1/api/products-list/{id}", 1L)
+                .perform(get("/v1/api/shopping-list/{id}", 1L)
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -97,23 +97,23 @@ class ProductsListControllerTest {
     }
 
     @Test
-    void testCreateProductsList() throws Exception {
+    void testCreateShoppingList() throws Exception {
         // Setup
-        // Configure ProductsListService.createProductsList(...).
+        // Configure ShoppingListService.createShoppingList(...).
         final String expectedStringResult = "{\"id\":1,\"name\":\"List 1\",\"description\":\"Description of list 1\"}";
 
-        final ProductsListDto productsListDto = TestConfigurationUtil.createSingleProductsListDtoNoId(1L);
+        final ShoppingListDto shoppingListDto = TestConfigurationUtil.createSingleShoppingListDtoNoId(1L);
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson=ow.writeValueAsString(productsListDto);
+        String requestJson=ow.writeValueAsString(shoppingListDto);
 
-        productsListDto.setId(1L);
-        when(mockProductsListService.createProductsList(any())).thenReturn(productsListDto);
+        shoppingListDto.setId(1L);
+        when(mockShoppingListService.createShoppingList(any())).thenReturn(shoppingListDto);
 
         // Run the test
         final MockHttpServletResponse response = mockMvc
-                .perform(post("/v1/api/products-list")
+                .perform(post("/v1/api/shopping-list")
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -125,23 +125,23 @@ class ProductsListControllerTest {
     }
 
     @Test
-    void testUpdateProductsList() throws Exception {
+    void testUpdateShoppingList() throws Exception {
         // Setup
-        // Configure ProductsListService.updateProductsList(...).
-        final ProductsListDto productsListDtoReq = TestConfigurationUtil.createSingleProductsListDtoNoId(2L);
+        // Configure ShoppingListService.updateShoppingList(...).
+        final ShoppingListDto shoppingListDtoReq = TestConfigurationUtil.createSingleShoppingListDtoNoId(2L);
         final String expectedStringResult = "{\"id\":2,\"name\":\"List 2\",\"description\":\"Description of list 2\"}";
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson=ow.writeValueAsString(productsListDtoReq);
+        String requestJson=ow.writeValueAsString(shoppingListDtoReq);
 
-        final ProductsListDto productsListDtoNew = TestConfigurationUtil.createSingleProductsListDto(2L);
-        when(mockProductsListService.updateProductsList(1L, productsListDtoReq)).thenReturn(productsListDtoNew);
+        final ShoppingListDto shoppingListDtoNew = TestConfigurationUtil.createSingleShoppingListDto(2L);
+        when(mockShoppingListService.updateShoppingList(1L, shoppingListDtoReq)).thenReturn(shoppingListDtoNew);
 
         // Run the test
         final MockHttpServletResponse response = mockMvc
-                .perform(put("/v1/api/products-list/{id}", 1L)
+                .perform(put("/v1/api/shopping-list/{id}", 1L)
                         .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -153,16 +153,16 @@ class ProductsListControllerTest {
     }
 
     @Test
-    void testDeleteProductsList() throws Exception {
+    void testDeleteShoppingList() throws Exception {
         // Setup
         // Run the test
-        final MockHttpServletResponse response = mockMvc.perform(delete("/v1/api/products-list/{id}", 1)
+        final MockHttpServletResponse response = mockMvc.perform(delete("/v1/api/shopping-list/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
         // Verify the results
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
-        assertThat(response.getContentAsString()).isEqualTo("");
-        verify(mockProductsListService).deleteProductsList(1L);
+        assertThat(response.getContentAsString()).isEmpty();
+        verify(mockShoppingListService).deleteShoppingList(1L);
     }
 }
