@@ -1,34 +1,34 @@
 package com.brago.app.shoplistapp;
 
-import com.brago.app.shoplistapp.dto.ProductsListDto;
-import com.brago.app.shoplistapp.model.ProductsList;
+import com.brago.app.shoplistapp.dto.ShoppingListDto;
+import com.brago.app.shoplistapp.model.ShoppingList;
 
 public class TestConfigurationUtil {
 
-    public static ProductsListDto createSingleProductsListDto(Long itemNumber){
-        final ProductsListDto productsListDto = new ProductsListDto();
-        productsListDto.setId(itemNumber);
-        productsListDto.setName("List " + itemNumber);
-        productsListDto.setDescription("Description of list " + itemNumber);
+    public static ShoppingListDto createSingleShoppingListDto(Long itemNumber){
+        final ShoppingListDto shoppingListDto = new ShoppingListDto();
+        shoppingListDto.setId(itemNumber);
+        shoppingListDto.setName("List " + itemNumber);
+        shoppingListDto.setDescription("Description of list " + itemNumber);
 
-        return productsListDto;
+        return shoppingListDto;
     }
 
-    public static ProductsListDto createSingleProductsListDtoNoId(Long itemNumber){
-        final ProductsListDto productsListDto = new ProductsListDto();
-        productsListDto.setName("List " + itemNumber);
-        productsListDto.setDescription("Description of list " + itemNumber);
+    public static ShoppingListDto createSingleShoppingListDtoNoId(Long itemNumber){
+        final ShoppingListDto shoppingListDto = new ShoppingListDto();
+        shoppingListDto.setName("List " + itemNumber);
+        shoppingListDto.setDescription("Description of list " + itemNumber);
 
 
-        return productsListDto;
+        return shoppingListDto;
     }
 
-    public static ProductsList createSingleProductsList (Long itemNumber){
-        final ProductsList productsList = new ProductsList();
-        productsList.setId(itemNumber);
-        productsList.setName("List " + itemNumber);
-        productsList.setDescription("Description of list " + itemNumber);
+    public static ShoppingList createSingleShoppingList (Long itemNumber){
+        final ShoppingList shoppingList = new ShoppingList();
+        shoppingList.setId(itemNumber);
+        shoppingList.setName("List " + itemNumber);
+        shoppingList.setDescription("Description of list " + itemNumber);
 
-        return productsList;
+        return shoppingList;
     }
 }

@@ -56,21 +56,21 @@ class ControllerExceptionHandlerTest {
     void testHandleMethodArgumentNotValid() {
         // Setup
        *//* MethodArgumentNotValidException methodArgumentNotValidException = mock(MethodArgumentNotValidException.class);
-        BindingResult bindingResult = new BindException(new ProductsList(), "productsList");
+        BindingResult bindingResult = new BindException(new ShoppingList(), "shoppingList");
         bindingResult.addError(new ObjectError("name", "should not be empty"));
        *//**//* when(bindingResult.getFieldErrors())
-                .thenReturn(Arrays.asList(new FieldError("productsList", "name", "should not be empty")));*//**//*
+                .thenReturn(Arrays.asList(new FieldError("shoppingList", "name", "should not be empty")));*//**//*
 //        when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
         doReturn(bindingResult).when(methodArgumentNotValidException).getBindingResult();*//*
 
-        BindingResult bindingResult = new BeanPropertyBindingResult(new ProductsList(), "productsList");
+        BindingResult bindingResult = new BeanPropertyBindingResult(new ShoppingList(), "shoppingList");
         bindingResult.addError(new ObjectError("name", "should not be empty"));
-//        errors.add(new FieldError("productsList", "name", "should not be empty"))
-//        bindingResult.addAllErrors(Arrays.asList(new FieldError("productsList", "name", "should not be empty"));
+//        errors.add(new FieldError("shoppingList", "name", "should not be empty"))
+//        bindingResult.addAllErrors(Arrays.asList(new FieldError("shoppingList", "name", "should not be empty"));
         MethodArgumentNotValidException methodArgumentNotValidException = mock(MethodArgumentNotValidException.class);
 //        BindingResult bindingResult = mock(BindingResult.class);
         *//*when(bindingResult.getFieldErrors())
-                .thenReturn(Arrays.asList(new FieldError("productsList", "name", "should not be empty")));*//*
+                .thenReturn(Arrays.asList(new FieldError("shoppingList", "name", "should not be empty")));*//*
         when(methodArgumentNotValidException.getBindingResult()).thenReturn(bindingResult);
 //        doReturn(bindingResult).when(methodArgumentNotValidException).getBindingResult();
         final HttpHeaders headers = new HttpHeaders();
