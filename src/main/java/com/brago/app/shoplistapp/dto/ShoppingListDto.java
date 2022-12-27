@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class ProductsListDto {
+public class ShoppingListDto {
     private Long id;
 
     @NotBlank(message = "Name of the list must not be blank")

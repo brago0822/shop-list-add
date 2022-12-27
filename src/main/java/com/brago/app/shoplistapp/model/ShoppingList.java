@@ -1,12 +1,14 @@
 package com.brago.app.shoplistapp.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "ProductsList")
-@Data
-public class ProductsList {
+@Table(name = "ShoppingList")
+@Getter
+@Setter
+public class ShoppingList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
