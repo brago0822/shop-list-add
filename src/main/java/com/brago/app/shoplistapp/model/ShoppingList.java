@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "ShoppingList")
 @Getter
@@ -16,5 +18,8 @@ public class ShoppingList {
 
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "shoppingList", fetch = FetchType.LAZY)
+    private Set<ItemRecord> registrations;
 
 }
